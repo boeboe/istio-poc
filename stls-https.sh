@@ -3,8 +3,8 @@ export BASE_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 source ${BASE_DIR}/env.sh
 
 # Define the manifests directory
-MANIFEST_DIR="${BASE_DIR}/mtls-https"
-CERT_DIR="${BASE_DIR}/output/mtls-https"
+MANIFEST_DIR="${BASE_DIR}/stls-https"
+CERT_DIR="${BASE_DIR}/output/stls-https"
 
 # Function to generate wildcard certificate and create Kubernetes secret
 function create_tls_secret {
@@ -49,11 +49,17 @@ function deploy_nginx_with_istio {
   print_info "Deploying Istio PeerAuthentication..."
   kubectl apply -f "${MANIFEST_DIR}/05-peerauthentication.yaml"
 
-  print_info "Nginx has been deployed and exposed through the Istio ingress gateway (Mutual TLS HTTPS)."
+  print_info "Deploying Istio DestinationRule..."
+  kubectl apply -f "${MANIFEST_DIR}/06-destinationrule.yaml"
+
+  print_info "Nginx has been deployed and exposed through the Istio ingress gateway (Single TLS HTTPS)."
 }
 
 # Function to undeploy Nginx with Istio Gateway
 function undeploy_nginx_with_istio {
+  print_info "Deleting Istio DestinationRule..."
+  kubectl delete -f "${MANIFEST_DIR}/06-destinationrule.yaml" --ignore-not-found
+
   print_info "Deleting Istio PeerAuthentication..."
   kubectl delete -f "${MANIFEST_DIR}/05-peerauthentication.yaml" --ignore-not-found
 

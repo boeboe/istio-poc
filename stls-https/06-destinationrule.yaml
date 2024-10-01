@@ -1,0 +1,11 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: nginx-destinationrule
+  namespace: single-tls
+spec:
+  host: nginx-service
+  trafficPolicy:
+    tls:
+      mode: SIMPLE  # Enable SIMPLE TLS from the ingress gateway to the nginx service

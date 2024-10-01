@@ -44,8 +44,14 @@ deploy-plain-http: ## Deploy Nginx as plain HTTP with Istio Gateway
 undeploy-plain-http: ## Undeploy Nginx as plain HTTP with Istio Gateway
 	./plain-http.sh undeploy
 
-deploy-mtls-https: ## Deploy Nginx as mTLS HTTPS with Istio Gateway
+deploy-stls-https: ## Deploy Nginx as Single TLS HTTPS with Istio Gateway
+	./stls-https.sh deploy
+
+undeploy-stls-https: ## Undeploy Nginx as Single TLS HTTPS with Istio Gateway
+	./stls-https.sh undeploy
+
+deploy-mtls-https: ## Deploy Nginx as Mutual TLS HTTPS with Istio Gateway
 	./mtls-https.sh deploy
 
-undeploy-mtls-https: ## Undeploy Nginx as mTLS HTTPS with Istio Gateway
+undeploy-mtls-https: ## Undeploy Nginx as Mutual TLS HTTPS with Istio Gateway
 	./mtls-https.sh undeploy

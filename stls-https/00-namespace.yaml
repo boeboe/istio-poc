@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: single-tls
+  annotations:
+    istio-injection: "enabled"  # Enable sidecar injection
