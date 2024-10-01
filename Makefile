@@ -29,6 +29,9 @@ down: ## Destroy the kind cluster
 info: ## Print kind cluster information and kubectl info
 	./info.sh
 
+clean: ## Clean all temporary artifacts
+	rm -rf ./output/*
+
 ######################
 ##### Scenarios ######
 ######################
@@ -40,3 +43,9 @@ deploy-plain-http: ## Deploy Nginx as plain HTTP with Istio Gateway
 
 undeploy-plain-http: ## Undeploy Nginx as plain HTTP with Istio Gateway
 	./plain-http.sh undeploy
+
+deploy-mtls-https: ## Deploy Nginx as mTLS HTTPS with Istio Gateway
+	./mtls-https.sh deploy
+
+undeploy-mtls-https: ## Undeploy Nginx as mTLS HTTPS with Istio Gateway
+	./mtls-https.sh undeploy

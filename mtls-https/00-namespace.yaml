@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mtls-https
+  annotations:
+    istio-injection: "enabled"  # Enable sidecar injection for mTLS
