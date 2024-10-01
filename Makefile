@@ -33,7 +33,7 @@ info: ## Print kind cluster information and kubectl info
 ##### Scenarios ######
 ######################
 
-.PHONY: deploy-nginx undeploy-nginx
+.PHONY: deploy-plain-http undeploy-plain-http
 
 deploy-plain-http: ## Deploy Nginx as plain HTTP with Istio Gateway
 	./plain-http.sh deploy
