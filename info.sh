@@ -17,10 +17,7 @@ print_info "Kubectl context information:"
 kubectl cluster-info --context "${KUBECONTEXT}"
 
 print_info "Kubernetes pods and services:"
-kubectl get po,svc --all-namespaces --context "${KUBECONTEXT}"
-
-print_info "Istio pods:"
-kubectl get po -n istio-system --context "${KUBECONTEXT}" -o wide
+kubectl get po,svc --all-namespaces --context "${KUBECONTEXT}" -o wide
 
 print_info "Fetching Istio ingress gateway NodePort information..."
 INGRESS_PORT=$(kubectl get svc istio-ingressgateway -n istio-system --context "${KUBECONTEXT}" -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
