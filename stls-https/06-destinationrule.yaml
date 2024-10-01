@@ -7,5 +7,8 @@ metadata:
 spec:
   host: nginx-service
   trafficPolicy:
-    tls:
-      mode: SIMPLE  # Enable SIMPLE TLS from the ingress gateway to the nginx service
+    portLevelSettings:
+    - port:
+        number: 80
+      tls:
+        mode: SIMPLE  # Enable SIMPLE TLS between the ingress gateway and the nginx sidecar
