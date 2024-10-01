@@ -8,10 +8,13 @@ help: ## This help
 
 .DEFAULT_GOAL := help
 
+#################
+##### Setup #####
+#################
+
 .PHONY: up-kind up-istio up down info reset
 
 reset: down up ## Reset the kind cluster and Istio installation
-
 up: up-kind up-istio ## Spin up a kind cluster and install/upgrade Istio
 
 up-kind: ## Spin up a kind cluster
@@ -25,3 +28,15 @@ down: ## Destroy the kind cluster
 
 info: ## Print kind cluster information and kubectl info
 	./info.sh
+
+######################
+##### Scenarios ######
+######################
+
+.PHONY: deploy-nginx undeploy-nginx
+
+deploy-plain-http: ## Deploy Nginx as plain HTTP with Istio Gateway
+	./plain-http.sh deploy
+
+undeploy-plain-http: ## Undeploy Nginx as plain HTTP with Istio Gateway
+	./plain-http.sh undeploy
