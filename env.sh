@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-# Variables
+# Setup Environment Variables
 export CLUSTER_NAME="istio-cluster"
 export KUBECONTEXT="kind-${CLUSTER_NAME}"
 export ISTIO_VERSION="1.18.0"
+export INGRESS_STATUS_PORT=30021
+export INGRESS_HTTP_PORT=30080
+export INGRESS_HTTPS_PORT=30443
 
 # Colors
 end="\033[0m"

@@ -10,7 +10,23 @@ helm repo update
 print_info "Installing or upgrading Istio components..."
 helm upgrade --install istio-base istio/base --namespace istio-system --create-namespace --version "${ISTIO_VERSION}" --wait
 helm upgrade --install istiod istio/istiod --namespace istio-system --version "${ISTIO_VERSION}" --wait
-helm upgrade --install istio-ingressgateway istio/gateway --namespace istio-system --version "${ISTIO_VERSION}" --set service.type=NodePort --wait
+helm upgrade --install istio-ingressgateway istio/gateway \
+  --namespace istio-system \
+  --version "${ISTIO_VERSION}" \
+  --set service.type=NodePort \
+  --set service.ports[0].name=status-port \
+  --set "service.ports[0].nodePort=${INGRESS_STATUS_PORT}" \
+  --set service.ports[0].port=15021 \
+  --set service.ports[0].targetPort=15021 \
+  --set service.ports[1].name=http2 \
+  --set "service.ports[1].nodePort=${INGRESS_HTTP_PORT}" \
+  --set service.ports[1].port=80 \
+  --set service.ports[1].targetPort=80 \
+  --set service.ports[2].name=https \
+  --set "service.ports[2].nodePort=${INGRESS_HTTPS_PORT}" \
+  --set service.ports[2].port=443 \
+  --set service.ports[2].targetPort=443 \
+  --wait
 
 print_info "Waiting for Istio pods to be ready..."
 until kubectl get pods -n istio-system >/dev/null 2>&1; do
