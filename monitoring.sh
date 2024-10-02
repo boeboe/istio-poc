@@ -44,48 +44,19 @@ function install_kube_state_metrics {
     --wait
 }
 
-# Function to import a Grafana dashboard using the Grafana API
-function import_dashboard {
-  NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}' --context "${KUBECONTEXT}")
-  GRAFANA_PORT="${GRAFANA_PORT:-30091}"
-  GRAFANA_URL="http://${NODE_IP}:${GRAFANA_PORT}"
-  DASHBOARD_ID=6417
-  GRAFANA_USER="admin"
-  GRAFANA_PASSWORD=$(kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode)
-  
+# Function to download a Grafana dashboard
+function download_dashboard {
+  DASHBOARD_ID=18283
+
   print_info "Importing Grafana dashboard with ID ${DASHBOARD_ID}..."
 
   # Fetch the Grafana dashboard JSON using the dashboard ID
-  DASHBOARD_ID=6417
   curl -s -H "Accept: application/json" "https://grafana.com/api/dashboards/${DASHBOARD_ID}/revisions/latest/download" -o "${BASE_DIR}/output/dashboard.json"
-
-  cat <<EOF > "${BASE_DIR}/output/dashboard_import.json"
-{
-  “dashboard”: $(cat "${BASE_DIR}/output/dashboard.json"),
-  “folderId”: 0,
-  “overwrite”: true,
-  “inputs”: [
-    {
-    “name”: “DS_PROMETHEUS”,
-    “type”: “datasource”,
-    “pluginId”: “prometheus”,
-    “value”: “Prometheus”
-    }
-  ]
-}
-EOF
-
-  # Import the dashboard to Grafana using the Grafana API
-  curl -X POST "${GRAFANA_URL}/api/dashboards/db" \
-    -H "Content-Type: application/json" \
-    -u "${GRAFANA_USER}:${GRAFANA_PASSWORD}" \
-    -d @${BASE_DIR}/output/dashboard_import.json
-
-  print_info "Dashboard import completed."
+  print_info "Dashboard download completed, import manually with ID ${DASHBOARD_ID}."
 }
 
 # Install Prometheus, kube-state-metrics, and Grafana
 install_prometheus
 install_kube_state_metrics
 install_grafana
-import_dashboard
+download_dashboard

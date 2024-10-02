@@ -41,5 +41,4 @@ print_info "Grafana admin password: ${GRAFANA_ADMIN_PASSWORD}"
 
 print_info "\nTest traffic commands:"
 print_command "curl http://test.example.com:30443 --resolve test.example.com:${INGRESS_HTTP_PORT}:${NODE_IP} -H 'Test: HALLOOOOOO'"
-print_command "curl https://test.example.com:30443 --cacert output/stls-https/wildcard-cert.pem  --resolve test.example.com:${INGRESS_HTTPS_PORT}:${NODE_IP} -H 'Test: HALLOOOOOO'"
 print_command "curl https://test.example.com:30443 --cacert output/mtls-https/wildcard-cert.pem  --resolve test.example.com:${INGRESS_HTTPS_PORT}:${NODE_IP} -H 'Test: HALLOOOOOO'"

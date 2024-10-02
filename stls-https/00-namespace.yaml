@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: single-tls
-  labels:
-    istio-injection: enabled  # Enable sidecar injection
