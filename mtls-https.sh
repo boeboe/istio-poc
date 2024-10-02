@@ -9,6 +9,7 @@ CERT_DIR="${BASE_DIR}/output/mtls-https"
 # Function to generate wildcard certificate and create Kubernetes secret
 function create_tls_secret {
   print_info "Generating wildcard certificate and private key..."
+  rm -rf "${CERT_DIR}"
   mkdir -p "${CERT_DIR}"
 
   # Generate a private key

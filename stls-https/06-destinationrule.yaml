@@ -12,3 +12,5 @@ spec:
         number: 80
       tls:
         mode: SIMPLE  # Enable SIMPLE TLS between the ingress gateway and the nginx sidecar
+        insecureSkipVerify: true
+        
