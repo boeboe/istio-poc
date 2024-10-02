@@ -12,7 +12,7 @@ help: ## This help
 ##### Setup #####
 #################
 
-.PHONY: up-kind up-istio up down info reset
+.PHONY: up-kind up-istio up down monitoring info reset clean
 
 reset: down up ## Reset the kind cluster and Istio installation
 up: up-kind up-istio ## Spin up a kind cluster and install/upgrade Istio
@@ -25,6 +25,9 @@ up-istio: ## Install/upgrade Istio using Helm with NodePort for ingress gateway
 
 down: ## Destroy the kind cluster
 	./down.sh
+
+monitoring: ## Install Prometheus and Grafana using Helm
+	./monitoring.sh
 
 info: ## Print kind cluster information and kubectl info
 	./info.sh

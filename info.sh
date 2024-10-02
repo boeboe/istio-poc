@@ -17,10 +17,14 @@ print_info "Kubectl context information:"
 kubectl cluster-info --context "${KUBECONTEXT}"
 
 print_info "Kubernetes pods and services:"
-kubectl get po,svc --all-namespaces --context "${KUBECONTEXT}" -o wide
+kubectl get po,svc --all-namespaces -o wide --context "${KUBECONTEXT}"
 
-print_info "Fetching Istio ingress gateway NodePort information..."
-INGRESS_PORT=$(kubectl get svc istio-ingressgateway -n istio-system --context "${KUBECONTEXT}" -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
-INGRESS_HTTPS_PORT=$(kubectl get svc istio-ingressgateway -n istio-system --context "${KUBECONTEXT}" -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
-NODE_IP=$(kubectl get nodes --context "${KUBECONTEXT}" -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
+print_info "\nFetching Istio ingress gateway NodePort information..."
+INGRESS_PORT=$(kubectl get svc istio-ingressgateway -n istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}' --context "${KUBECONTEXT}")
+INGRESS_HTTPS_PORT=$(kubectl get svc istio-ingressgateway -n istio-system -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}' --context "${KUBECONTEXT}")
+NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}' --context "${KUBECONTEXT}")
 print_info "Istio ingress gateway is available at http://${NODE_IP}:${INGRESS_PORT} and https://${NODE_IP}:${INGRESS_HTTPS_PORT}"
+
+print_info "\nFetching Grafana admin password..."
+GRAFANA_ADMIN_PASSWORD=$(kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" --context "${KUBECONTEXT}" | base64 --decode)
+print_info "Grafana admin password: ${GRAFANA_ADMIN_PASSWORD}"

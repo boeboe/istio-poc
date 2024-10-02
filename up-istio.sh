@@ -8,10 +8,25 @@ helm repo add istio https://istio-release.storage.googleapis.com/charts
 helm repo update
 
 print_info "Installing or upgrading Istio components..."
-helm upgrade --install istio-base istio/base --namespace istio-system --create-namespace --version "${ISTIO_VERSION}" --wait
-helm upgrade --install istiod istio/istiod --namespace istio-system --version "${ISTIO_VERSION}" --wait
+# Install Istio Base
+helm upgrade --install istio-base istio/base \
+  --namespace istio-system \
+  --create-namespace \
+  --kube-context "${KUBECONTEXT}" \
+  --version "${ISTIO_VERSION}" \
+  --wait
+
+# Install Istiod
+helm upgrade --install istiod istio/istiod \
+  --namespace istio-system \
+  --kube-context "${KUBECONTEXT}" \
+  --version "${ISTIO_VERSION}" \
+  --wait
+
+# Install Istio Ingress Gateway with NodePort configuration
 helm upgrade --install istio-ingressgateway istio/gateway \
   --namespace istio-system \
+  --kube-context "${KUBECONTEXT}" \
   --version "${ISTIO_VERSION}" \
   --set service.type=NodePort \
   --set service.ports[0].name=status-port \
@@ -29,8 +44,8 @@ helm upgrade --install istio-ingressgateway istio/gateway \
   --wait
 
 print_info "Waiting for Istio pods to be ready..."
-until kubectl get pods -n istio-system >/dev/null 2>&1; do
+until kubectl get pods -n istio-system --context "${KUBECONTEXT}" >/dev/null 2>&1; do
     print_info "Waiting for Istio resources to be created..."
     sleep 5
 done
-kubectl wait --for=condition=Ready pods --all -n istio-system --timeout=300s
+kubectl wait --for=condition=Ready pods --all -n istio-system --timeout=300s --context "${KUBECONTEXT}"
