@@ -8,7 +8,7 @@ spec:
   hosts:
   - "perf-https-mtls.${DNS_SUFFIX}"
   gateways:
-  - nginx-gateway
+  - nginx-gateway-https-mtls
   http:
   - match:
     - uri:

@@ -8,7 +8,7 @@ spec:
   hosts:
   - "perf-http.${DNS_SUFFIX}"
   gateways:
-  - nginx-gateway
+  - nginx-gateway-http
   http:
   - match:
     - uri:

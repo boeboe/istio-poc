@@ -17,4 +17,4 @@ print_info "Istio ingress gateway is available at http://${INGRESS_EXTERNAL_IP}:
 
 print_info "\nTest traffic commands:"
 print_command "curl http://perf-http.${DNS_SUFFIX} --resolve perf-http.${DNS_SUFFIX}:${INGRESS_HTTP_PORT}:${INGRESS_EXTERNAL_IP} -H 'Test: HALLOOOOOO'"
-print_command "curl https://perf-https-mtls.${DNS_SUFFIX} --cacert output/mtls-https/wildcard-cert.pem  --resolve perf-https-mtls.${DNS_SUFFIX}:${INGRESS_HTTPS_PORT}:${INGRESS_EXTERNAL_IP} -H 'Test: HALLOOOOOO'"
+print_command "curl https://perf-https-mtls.${DNS_SUFFIX} --cacert output/https-mtls/wildcard-cert.pem  --resolve perf-https-mtls.${DNS_SUFFIX}:${INGRESS_HTTPS_PORT}:${INGRESS_EXTERNAL_IP} -H 'Test: HALLOOOOOO'"

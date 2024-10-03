@@ -2,7 +2,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: nginx-gateway
+  name: nginx-gateway-https-mtls
   namespace: perf-https-mtls
 spec:
   selector:
@@ -14,6 +14,6 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE  # Use SIMPLE TLS mode to terminate HTTPS traffic at the gateway
-      credentialName: nginx-gateway-certs  # Reference the Kubernetes secret
+      credentialName: perf-https-mtls-certs  # Reference the Kubernetes secret
     hosts:
     - "perf-https-mtls.${DNS_SUFFIX}"

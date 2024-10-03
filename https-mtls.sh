@@ -27,14 +27,14 @@ function create_tls_secret {
   # Create the Kubernetes secret for the certificate and key if it doesn't already exist
   print_info "Checking if Kubernetes secret for the wildcard certificate already exists..."
 
-  if ! kubectl get secret nginx-gateway-certs -n "${ISTIO_NS}" &>/dev/null; then
+  if ! kubectl get secret perf-https-mtls-certs -n "${ISTIO_INGRESS_NS}" &>/dev/null; then
     print_info "Creating Kubernetes secret for the wildcard certificate..."
-    kubectl create -n "${ISTIO_NS}" secret tls nginx-gateway-certs \
+    kubectl create -n "${ISTIO_INGRESS_NS}" secret tls perf-https-mtls-certs \
       --cert="${CERT_DIR}/wildcard-cert.pem" \
       --key="${CERT_DIR}/wildcard-key.pem" --dry-run=client -o yaml | kubectl apply -f -
     print_info "TLS secret has been created."
   else
-    print_info "Kubernetes secret 'nginx-gateway-certs' already exists. Skipping creation."
+    print_info "Kubernetes secret 'perf-https-mtls-certs' already exists. Skipping creation."
   fi
 }
 
@@ -42,7 +42,7 @@ function create_tls_secret {
 # Function to remove the Kubernetes secret for the wildcard certificate
 function remove_tls_secret {
   print_info "Deleting Kubernetes secret for the wildcard certificate..."
-  kubectl delete secret nginx-gateway-certs -n "${ISTIO_NS}" --ignore-not-found
+  kubectl delete secret perf-https-mtls-certs -n "${ISTIO_INGRESS_NS}" --ignore-not-found
   print_info "TLS secret has been deleted."
 }
 
