@@ -12,22 +12,7 @@ help: ## This help
 ##### Setup #####
 #################
 
-.PHONY: up-kind up-istio up down monitoring info reset clean
-
-reset: down up ## Reset the kind cluster and Istio installation
-up: up-kind up-istio ## Spin up a kind cluster and install/upgrade Istio
-
-up-kind: ## Spin up a kind cluster
-	./up-kind.sh
-
-up-istio: ## Install/upgrade Istio using Helm with NodePort for ingress gateway
-	./up-istio.sh
-
-down: ## Destroy the kind cluster
-	./down.sh
-
-monitoring: ## Install Prometheus and Grafana using Helm
-	./monitoring.sh
+.PHONY: info clean
 
 info: ## Print kind cluster information and kubectl info
 	./info.sh
@@ -39,16 +24,16 @@ clean: ## Clean all temporary artifacts
 ##### Scenarios ######
 ######################
 
-.PHONY: deploy-plain-http undeploy-plain-http
+.PHONY: deploy-http undeploy-http deploy-https-mtls undeploy-https-mtls
 
-deploy-plain-http: ## Deploy Nginx as plain HTTP with Istio Gateway
-	./plain-http.sh deploy
+deploy-http: ## Deploy Nginx as plain HTTP with Istio Gateway
+	./http.sh deploy
 
-undeploy-plain-http: ## Undeploy Nginx as plain HTTP with Istio Gateway
-	./plain-http.sh undeploy
+undeploy-http: ## Undeploy Nginx as plain HTTP with Istio Gateway
+	./http.sh undeploy
 
-deploy-mtls-https: ## Deploy Nginx as Mutual TLS HTTPS with Istio Gateway
-	./mtls-https.sh deploy
+deploy-https-mtls: ## Deploy Nginx as mutual TLS HTTPS with Istio Gateway
+	./https-mtls.sh deploy
 
-undeploy-mtls-https: ## Undeploy Nginx as Mutual TLS HTTPS with Istio Gateway
-	./mtls-https.sh undeploy
+undeploy-https-mtls: ## Undeploy Nginx as mutual TLS HTTPS with Istio Gateway
+	./https-mtls.sh undeploy

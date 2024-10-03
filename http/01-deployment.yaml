@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: mtls-https
+  namespace: perf-http
 spec:
   replicas: 1
   selector:

@@ -3,10 +3,10 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: nginx-virtualservice
-  namespace: plain-http
+  namespace: perf-https-mtls
 spec:
   hosts:
-  - "*"
+  - "perf-https-mtls.${DNS_SUFFIX}"
   gateways:
   - nginx-gateway
   http:

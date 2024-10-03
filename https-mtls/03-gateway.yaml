@@ -3,10 +3,10 @@ apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: nginx-gateway
-  namespace: mtls-https
+  namespace: perf-https-mtls
 spec:
   selector:
-    istio: ingressgateway  # Use the default Istio ingress gateway
+    istio: ${ISTIO_INGRESS_SVC}
   servers:
   - port:
       number: 443
@@ -16,4 +16,4 @@ spec:
       mode: SIMPLE  # Use SIMPLE TLS mode to terminate HTTPS traffic at the gateway
       credentialName: nginx-gateway-certs  # Reference the Kubernetes secret
     hosts:
-    - "*"
+    - "perf-https-mtls.${DNS_SUFFIX}"
