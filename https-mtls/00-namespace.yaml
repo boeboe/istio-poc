@@ -5,3 +5,4 @@ metadata:
   name: perf-https-mtls
   labels:
     istio-injection: enabled  # Enable sidecar injection for mTLS
+    istio.io/rev: asm-1-22  # https://learn.microsoft.com/en-us/azure/aks/istio-deploy-addon#enable-sidecar-injection
