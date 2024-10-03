@@ -3,5 +3,3 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: perf-http
-  labels:
-    istio-injection: disabled
