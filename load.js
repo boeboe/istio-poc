@@ -18,8 +18,8 @@ const KEY = open('output/https-mtls/wildcard-key.pem');   // Path to private key
 
 export let options = {
   stages: [
-    { duration: '1m', target: 10 }, // Ramp-up to 10 users over 1 minute
-    { duration: '5m', target: 10 }, // Hold at 10 users for 5 minutes
+    { duration: '1m', target: 1000 }, // Ramp-up to 10 users over 1 minute
+    { duration: '5m', target: 1000 }, // Hold at 10 users for 5 minutes
     { duration: '1m', target: 0 },  // Ramp-down to 0 users over 1 minute
   ],
 };
