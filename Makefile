@@ -37,3 +37,6 @@ deploy-https-mtls: ## Deploy Nginx as mutual TLS HTTPS with Istio Gateway
 
 undeploy-https-mtls: ## Undeploy Nginx as mutual TLS HTTPS with Istio Gateway
 	./https-mtls.sh undeploy
+
+load-tests: ## Start k6 based load tests
+	./load.sh
