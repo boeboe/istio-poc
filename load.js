@@ -17,6 +17,10 @@ const CERT = open('output/https-mtls/wildcard-cert.pem'); // Path to certificate
 const KEY = open('output/https-mtls/wildcard-key.pem');   // Path to private key if needed
 
 export let options = {
+  cloud: {
+    projectID: '3718221',
+    name: `perf-${TEST_SCENARIO}`
+  },
   stages: [
     { duration: '1m', target: 1000 }, // Ramp-up to 10 users over 1 minute
     { duration: '5m', target: 1000 }, // Hold at 10 users for 5 minutes
