@@ -11,19 +11,20 @@ spec:
       app: nginx
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/proxyCPULimit: "0"
       labels:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest
-        ports:
-        - name: http
-          containerPort: 80
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
