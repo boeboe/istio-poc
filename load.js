@@ -16,11 +16,11 @@ const HTTPS_URL = `https://perf-https-mtls.${DNS_SUFFIX}:${INGRESS_HTTPS_PORT}/`
 const CERT = open('output/https-mtls/wildcard-cert.pem'); // Path to certificate
 const KEY = open('output/https-mtls/wildcard-key.pem');   // Path to private key if needed
 
-console.log(`DNS_SUFFIX: ${DNS_SUFFIX}`)
-console.log(`HTTP_URL: ${HTTP_URL}`)
-console.log(`HTTPS_URL: ${HTTPS_URL}`)
-console.log(`PROJECT_ID: ${PROJECT_ID}`)
-console.log(`TEST_SCENARIO: ${TEST_SCENARIO}`)
+// console.log(`DNS_SUFFIX: ${DNS_SUFFIX}`)
+// console.log(`HTTP_URL: ${HTTP_URL}`)
+// console.log(`HTTPS_URL: ${HTTPS_URL}`)
+// console.log(`PROJECT_ID: ${PROJECT_ID}`)
+// console.log(`TEST_SCENARIO: ${TEST_SCENARIO}`)
 
 export let options = {
   cloud: {
