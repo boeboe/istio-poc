@@ -2,11 +2,11 @@ import http from 'k6/http';
 import { check } from 'k6';
 
 // Environment variables
-const INGRESS_EXTERNAL_IP = __ENV.INGRESS_EXTERNAL_IP; // Pass in the Ingress IP via env variable
 const INGRESS_HTTP_PORT = __ENV.INGRESS_HTTP_PORT;
 const INGRESS_HTTPS_PORT = __ENV.INGRESS_HTTPS_PORT;
 const DNS_SUFFIX = __ENV.DNS_SUFFIX;
-const TEST_SCENARIO = __ENV.TEST_SCENARIO || 'http'; // Default to 'http' if not specified
+const PROJECT_ID = __ENV.PROJECT_ID;
+const TEST_SCENARIO = __ENV.TEST_SCENARIO
 
 // Define URLs
 const HTTP_URL = `http://perf-http.${DNS_SUFFIX}:${INGRESS_HTTP_PORT}/`;
@@ -16,10 +16,16 @@ const HTTPS_URL = `https://perf-https-mtls.${DNS_SUFFIX}:${INGRESS_HTTPS_PORT}/`
 const CERT = open('output/https-mtls/wildcard-cert.pem'); // Path to certificate
 const KEY = open('output/https-mtls/wildcard-key.pem');   // Path to private key if needed
 
+console.log(`DNS_SUFFIX: ${DNS_SUFFIX}`)
+console.log(`HTTP_URL: ${HTTP_URL}`)
+console.log(`HTTPS_URL: ${HTTPS_URL}`)
+console.log(`PROJECT_ID: ${PROJECT_ID}`)
+console.log(`TEST_SCENARIO: ${TEST_SCENARIO}`)
+
 export let options = {
   cloud: {
-    projectID: '3718221',
-    name: `perf-${TEST_SCENARIO}`
+    projectID: `${PROJECT_ID}`,
+    name: `perf-istio-${TEST_SCENARIO}`
   },
   stages: [
     { duration: '1m', target: 1000 }, // Ramp-up to 10 users over 1 minute
@@ -45,7 +51,7 @@ export default function () {
     let resHttps = http.get(HTTPS_URL, {
       headers: {
         'Test': 'HALLOOOOOO',
-        'Host': `perf-https-mtls.${DNS_SUFFIX}`,
+        'Host': `perf-istio-https-mtls.${DNS_SUFFIX}`,
       },
       tlsAuth: {
         cert: CERT, // Path to certificate

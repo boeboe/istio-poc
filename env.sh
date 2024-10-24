@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Setup Environment Variables
-export ENVIRONMENT="plfstg"
-# export ENVIRONMENT="plftst"
-# export ENVIRONMENT="plfdev"
+export ENVIRONMENT="gwc-plsdev"
+# export ENVIRONMENT="gwc-plstst"
+
 export ISTIO_NS="aks-istio-system"
 export ISTIO_INGRESS_NS="aks-istio-ingress"
 export ISTIO_EGRESS_NS="aks-istio-egress"
@@ -67,35 +67,26 @@ if ! command_exists helm; then
 fi
 
 case "${ENVIRONMENT}" in
-  plfstg)
-    print_info "Setting env variables for 'plfstg'"
-    export AZ_SUBSCRIPTION="d6ba0fbd-9ea3-4148-ac73-c9af12cb342a"
-    export AZ_RESOURCEGROUP="rg-apps-plfstg"
-    export AZ_AKS_NAME="aks-apps-plfstg"
-    export KUBECONTEXT="aks-apps-plfstg"
-    export DNS_SUFFIX="staging.platform.liantis.net"
+  gwc-plsdev)
+    print_info "Setting env variables for 'gwc-plsdev'"
+    export AZ_SUBSCRIPTION="e318542a-815a-46d8-93ab-15fabdd926ed"
+    export AZ_RESOURCEGROUP="rg-apps-1-gwc-plsdev"
+    export AZ_AKS_NAME="aks-apps-1-gwc-plsdev"
+    export KUBECONTEXT="aks-apps-1-gwc-plsdev"
+    export DNS_SUFFIX="development.staging.platform.liantis.net"
     ;;
 
-  plftst)
-    print_info "Setting env variables for 'plftst'"
-    export AZ_SUBSCRIPTION="a63f2e43-de09-4537-88d0-8e0f439bbbb4"
-    export AZ_RESOURCEGROUP="rg-apps-plftst"
-    export AZ_AKS_NAME="aks-apps-plftst"
-    export KUBECONTEXT="aks-apps-plftst"
-    export DNS_SUFFIX="test.platform.liantis.net"
-    ;;
-
-  plfdev)
-    print_info "Setting env variables for 'plfdev'"
-    export AZ_SUBSCRIPTION="30f926fb-0740-480c-aa79-5c635d83683d"
-    export AZ_RESOURCEGROUP="rg-apps-plfdev"
-    export AZ_AKS_NAME="aks-apps-plfdev"
-    export KUBECONTEXT="aks-apps-plfdev"
-    export DNS_SUFFIX="dev.platform.liantis.net"
+  gwc-plstst)
+    print_info "Setting env variables for 'gwc-plstst'"
+    export AZ_SUBSCRIPTION="7ec20f55-30d9-4fe6-92ec-ee01918c6a38"
+    export AZ_RESOURCEGROUP="rg-apps-1-gwc-plstst"
+    export AZ_AKS_NAME="aks-apps-1-gwc-plstst"
+    export KUBECONTEXT="aks-apps-1-gwc-plstst"
+    export DNS_SUFFIX="test.staging.platform.liantis.net"
     ;;
 
   *)
-    print_error "ENVIRONMENT must be one of 'plfstg', 'plftst' or 'plfdev'"
+    print_error "ENVIRONMENT must be one of 'gwc-plsdev' or 'gwc-plstst'"
     exit 1
     ;;
 esac
